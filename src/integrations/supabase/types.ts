@@ -14,13 +14,183 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      guesses: {
+        Row: {
+          created_at: string
+          id: number
+          result: string
+          room_id: string
+          round: number
+          user_id: string
+          value: number
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          result: string
+          room_id: string
+          round: number
+          user_id: string
+          value: number
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          result?: string
+          room_id?: string
+          round?: number
+          user_id?: string
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guesses_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      room_players: {
+        Row: {
+          guesses_total: number
+          joined_at: string
+          losses: number
+          name: string
+          ready: boolean
+          room_id: string
+          seat: number
+          user_id: string
+          wins: number
+        }
+        Insert: {
+          guesses_total?: number
+          joined_at?: string
+          losses?: number
+          name: string
+          ready?: boolean
+          room_id: string
+          seat: number
+          user_id: string
+          wins?: number
+        }
+        Update: {
+          guesses_total?: number
+          joined_at?: string
+          losses?: number
+          name?: string
+          ready?: boolean
+          room_id?: string
+          seat?: number
+          user_id?: string
+          wins?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "room_players_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      room_secrets: {
+        Row: {
+          room_id: string
+          secret: number
+          user_id: string
+        }
+        Insert: {
+          room_id: string
+          secret: number
+          user_id: string
+        }
+        Update: {
+          room_id?: string
+          secret?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "room_secrets_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rooms: {
+        Row: {
+          code: string
+          created_at: string
+          current_turn: string | null
+          expires_at: string
+          id: string
+          round: number
+          round_ended_at: string | null
+          round_started_at: string | null
+          status: string
+          updated_at: string
+          winner: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          current_turn?: string | null
+          expires_at?: string
+          id?: string
+          round?: number
+          round_ended_at?: string | null
+          round_started_at?: string | null
+          status?: string
+          updated_at?: string
+          winner?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          current_turn?: string | null
+          expires_at?: string
+          id?: string
+          round?: number
+          round_ended_at?: string | null
+          round_started_at?: string | null
+          status?: string
+          updated_at?: string
+          winner?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      clean_name: { Args: { _name: string }; Returns: string }
+      create_room: { Args: { p_name: string }; Returns: string }
+      is_room_member: { Args: { _room: string }; Returns: boolean }
+      join_room: { Args: { p_code: string; p_name: string }; Returns: string }
+      leave_room: { Args: { p_room: string }; Returns: undefined }
+      my_secret: { Args: { p_room: string }; Returns: number }
+      new_round: { Args: { p_room: string }; Returns: undefined }
+      reveal_secrets: {
+        Args: { p_room: string }
+        Returns: {
+          secret: number
+          user_id: string
+        }[]
+      }
+      set_secret: {
+        Args: { p_room: string; p_secret: number }
+        Returns: undefined
+      }
+      submit_guess: {
+        Args: { p_room: string; p_value: number }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
