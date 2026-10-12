@@ -190,7 +190,7 @@ function RoomCode({ code }: { code: string }) {
   );
 }
 
-function PlayerCard({ player, isMe, online, turn, status }: { player?: Player; isMe: boolean; online: boolean; turn: boolean; status: string }) {
+function PlayerCard({ player, isMe, online, turn, status }: { player: Player | undefined; isMe: boolean; online: boolean; turn: boolean; status: string }) {
   if (!player) {
     return <div className="rounded-3xl border border-dashed p-4 text-center text-muted-foreground sm:p-6">Waiting…</div>;
   }
@@ -209,7 +209,7 @@ function PlayerCard({ player, isMe, online, turn, status }: { player?: Player; i
   );
 }
 
-function PickSecret({ room, me, opp, mySecret, onPicked }: { room: Room; me?: Player; opp?: Player; mySecret: number | null; onPicked: (n: number) => void }) {
+function PickSecret({ room, me, opp, mySecret, onPicked }: { room: Room; me: Player | undefined; opp: Player | undefined; mySecret: number | null; onPicked: (n: number) => void }) {
   const [val, setVal] = useState("");
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
@@ -247,7 +247,7 @@ function PickSecret({ room, me, opp, mySecret, onPicked }: { room: Room; me?: Pl
 
 const clueClass: Record<Clue, string> = { higher: "text-higher", lower: "text-lower", correct: "text-correct" };
 
-function Battle({ room, uid, opp, guesses, players, mySecret }: { room: Room; uid: string; opp?: Player; guesses: Guess[]; players: Player[]; mySecret: number | null }) {
+function Battle({ room, uid, opp, guesses, players, mySecret }: { room: Room; uid: string; opp: Player | undefined; guesses: Guess[]; players: Player[]; mySecret: number | null }) {
   const myTurn = room.current_turn === uid;
   const [val, setVal] = useState("");
   const [err, setErr] = useState("");
@@ -311,7 +311,7 @@ function History({ guesses, uid, nameOf }: { guesses: Guess[]; uid: string; name
   );
 }
 
-function Victory({ room, uid, winner, players, guesses, revealed, onLeave }: { room: Room; uid: string; winner?: Player; players: Player[]; guesses: Guess[]; revealed: Record<string, number>; onLeave: () => void }) {
+function Victory({ room, uid, winner, players, guesses, revealed, onLeave }: { room: Room; uid: string; winner: Player | undefined; players: Player[]; guesses: Guess[]; revealed: Record<string, number>; onLeave: () => void }) {
   const [busy, setBusy] = useState(false);
   const iWon = room.winner === uid;
   const duration = room.round_started_at && room.round_ended_at
