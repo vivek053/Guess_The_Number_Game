@@ -26,7 +26,7 @@ function Home() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => setName(getSavedName()), []);
+  useEffect(() => { const s = getSavedName(); if (s) setName((n) => n || s); }, []);
 
   const needName = () => {
     if (!name.trim()) { setError("Enter your name first"); return true; }
