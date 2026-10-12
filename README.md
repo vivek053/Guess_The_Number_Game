@@ -1,29 +1,19 @@
-# Welcome to your Lovable project
+# Higher or Lower — Number Battle
 
-This project was built with [Lovable](https://lovable.dev).
+Free 2-player online number guessing game. Built with TanStack Start + Lovable Cloud (database, anonymous sessions, realtime).
 
-## Build with Lovable
+## Play / test with two devices
+1. Open the site on device A, enter a name, tap **Create Room**, share the 6-digit code.
+2. On device B (any network), enter a name, tap **Join Room**, type the code.
+3. Both lock a secret number (1–100). A random player starts; clues are Higher / Lower / Correct.
+4. Refreshing or reopening `/room/<code>` rejoins the same seat.
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+## Security
+- Secrets are stored in a table the browser cannot read. Guesses are checked inside the database (`submit_guess`) with a row lock, so turns, ranges and winners can't be faked.
+- Rooms expire after 2 hours without activity; expired rooms are removed when new rooms are created.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## Deploy
+Click **Publish** in Lovable. Hosting on lovable.app and the free Cloud tier cost nothing for light use; heavy traffic may exceed free usage limits.
 
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+## Tests
+`bunx vitest run`
