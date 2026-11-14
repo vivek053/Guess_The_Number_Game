@@ -13,3 +13,4 @@
 - All game rules (join, secrets, turns, guesses, scoring) live in Postgres SECURITY DEFINER functions called via supabase.rpc — why: atomic row locks and secrets never leave the database.
 - `room_secrets` has no grants for browser roles; secrets are only exposed via `my_secret` (own) and `reveal_secrets` (after a round ends) — why: opponents must never read them.
 - Players use anonymous sessions; connection status uses Realtime presence, not DB heartbeats — why: no login required and no write traffic.
+- Keep Android home-screen install metadata and icons in the web manifest and public assets — why: this app is distributed as an installable web app without a native Android package.
